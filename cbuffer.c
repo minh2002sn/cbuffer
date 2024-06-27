@@ -115,6 +115,19 @@ uint32_t cb_data_count(cbuffer_t *cb)
 
 uint32_t cb_space_count(cbuffer_t *cb)
 {
+  int res = 0;
+
+  if (cb == NULL)
+    return CB_ERROR;
+
+  if (cb->reader > cb->writer)
+    res = cb->reader - cb->writer - 1;
+  else if (cb->reader < cb->writer)
+    res = cb->size - cb->writer + cb->reader - 1;
+  else
+    res = cb->size - 1;
+
+  return res;
 }
 
 /* Private definitions ----------------------------------------------- */
