@@ -32,6 +32,21 @@
 /* Function definitions ----------------------------------------------- */
 uint32_t cb_init(cbuffer_t *cb, void *buf, uint32_t size)
 {
+  if (cb == NULL)
+    return CB_ERROR;
+  if (buf == NULL)
+    return CB_ERROR;
+  if (size >= CB_MAX_SIZE)
+    return CB_ERROR;
+
+  cb->data     = buf;
+  cb->size     = size;
+  cb->writer   = 0;
+  cb->reader   = 0;
+  cb->overflow = 0;
+  cb->active   = 1;
+
+  return CB_SUCCESS;
 }
 
 uint32_t cb_clear(cbuffer_t *cb)
