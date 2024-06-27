@@ -63,6 +63,17 @@ uint32_t cb_init(cbuffer_t *cb, void *buf, uint32_t size)
 
 uint32_t cb_clear(cbuffer_t *cb)
 {
+  if (cb == NULL)
+    return CB_ERROR;
+
+  cb->data     = 0;
+  cb->size     = 0;
+  cb->writer   = 0;
+  cb->reader   = 0;
+  cb->overflow = 0;
+  cb->active   = 0;
+
+  return CB_SUCCESS;
 }
 
 uint32_t cb_read(cbuffer_t *cb, void *buf, uint32_t nbytes)
