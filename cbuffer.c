@@ -28,7 +28,18 @@
 /* Private variables -------------------------------------------------- */
 
 /* Private function prototypes ---------------------------------------- */
+/**
+ * @brief           Write 1 byte to circular buffer
+ *
+ * @param[in]       cb      Pointer to a cbuffer_t structure
+ * @param[in]       byte    Data to write
+ *
+ * @return
+ *  - (0) : Success
+ *  - (-1): Error
+ */
 
+static uint32_t cb_write_byte(cbuffer_t *cb, uint8_t byte);
 /* Function definitions ----------------------------------------------- */
 uint32_t cb_init(cbuffer_t *cb, void *buf, uint32_t size)
 {
