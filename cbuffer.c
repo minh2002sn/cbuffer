@@ -55,5 +55,19 @@ uint32_t cb_space_count(cbuffer_t *cb)
 }
 
 /* Private definitions ----------------------------------------------- */
+static uint32_t cb_write_byte(cbuffer_t *cb, uint8_t byte)
+{
+  uint32_t next = cb->writer + 1;
+
+  if (next == cb->size)
+    next = 0;
+
+  if (next == cb->reader)
+    return CB_ERROR;
+
+  *(cb->data + cb->writer) = byte;
+  cb->writer               = next;
+  return CB_SUCCESS;
+}
 
 /* End of file -------------------------------------------------------- */
