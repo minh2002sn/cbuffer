@@ -52,6 +52,31 @@ uint32_t cb_clear(cbuffer_t *cb)
 
 uint32_t cb_read(cbuffer_t *cb, void *buf, uint32_t nbytes)
 {
+  int data_count      = 0;
+  int num_avail_bytes = 0;
+  if (cb == NULL)
+    return CB_ERROR;
+
+  if (buf == NULL)
+    return CB_ERROR;
+
+  if (!cb->active)
+    return CB_ERROR;
+  cb->active = 0;
+
+  data_count = cb_data_count(cb);
+  if (data_count >= nbytes)
+    num_avail_bytes = nbytes;
+  else
+    num_avail_bytes = data_count;
+
+  for (int i = 0; i < num_avail_bytes; i++)
+  {
+    cb_read_byte(cb, (uint8_t *)buf + i);
+  }
+
+  cb->active = 1;
+  return num_avail_bytes;
 }
 
 uint32_t cb_write(cbuffer_t *cb, void *buf, uint32_t nbytes)
