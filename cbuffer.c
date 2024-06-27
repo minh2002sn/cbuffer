@@ -111,6 +111,17 @@ uint32_t cb_write(cbuffer_t *cb, void *buf, uint32_t nbytes)
 
 uint32_t cb_data_count(cbuffer_t *cb)
 {
+  int res = 0;
+
+  if (cb == NULL)
+    return CB_ERROR;
+
+  if (cb->writer >= cb->reader)
+    res = cb->writer - cb->reader;
+  else
+    res = cb->size - cb->reader + cb->writer;
+
+  return res;
 }
 
 uint32_t cb_space_count(cbuffer_t *cb)
